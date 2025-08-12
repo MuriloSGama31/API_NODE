@@ -26,3 +26,4 @@ app.post('/cadastro', (req, res) => {
 app.listen(3000, () => {
     console.log('servidor rodando')
 }) //fica de olho na porta, pode trabalhar com 2 parametros porta, call back
+
