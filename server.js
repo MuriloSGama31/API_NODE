@@ -1,4 +1,5 @@
 import express from 'express'
+import express from 'cors'
 
 import pkg from '@prisma/client'
 const {PrismaClient} = pkg
@@ -6,11 +7,22 @@ const prisma = new PrismaClient()
 
 const app = express()
 app.use(express.json())
+app.use(cors())
 
 // rotas
 app.get('/cadastro', async (req, res) => {
+    
+    let filtro_usuario = []
 
-    const lista_usuarios = await prisma.usuario.findMany()
+    if(req.query){
+        filtro_usuario = await prisma.usuario.findMany({
+            where:{
+                nome: req.query.nome
+            }
+        })
+    }else{
+        filtro_usuario = await prisma.usuario.findMany()
+    }
 
     res.status(200).json(lista_usuarios)
 })
